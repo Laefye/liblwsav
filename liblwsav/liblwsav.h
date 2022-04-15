@@ -54,7 +54,7 @@ namespace LWSAV {
     };
 
     struct Peg {
-        l_uint8 peg_type; // false - input, true - output
+        l_uint8 peg_type; // true - input, false - output
         c_address address;
         l_uint32 index_peg;
     };
