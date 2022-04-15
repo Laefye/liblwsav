@@ -15,7 +15,9 @@ LWSAV::l_uint8 LWSAV::CircuitStates::get(l_uint16 id) {
     if (id / 8 >= this->states.size()) {
         return ERROR_INVALID_STATE_ID;
     }
-    return states[id / 8] >> id % 8 & 1;
+    l_uint8 state = this->states[id / 8];
+    state = state >> (id % 8);
+    return (state & 1);
 }
 
 LWSAV::Save::Save(std::string path) {
@@ -165,7 +167,7 @@ int LWSAV::Save::read_wire() {
     fread(&wire.end.address, sizeof(c_address), 1, file); // Адрес компонента
     fread(&wire.end.index_peg, sizeof(l_uint32), 1, file); // Индекс
     // Читаем circuit_state_id и поворот
-    fread(&wire.circuit_state_id, sizeof(l_uint16), 1, file); // circuit_state_id
+    fread(&wire.circuit_state_id, sizeof(l_uint32), 1, file); // circuit_state_id
     fread(&wire.rotation, sizeof(float), 1, file); // Поворот
     // Добавляем провод в список
     data.wires.push_back(wire);
@@ -174,7 +176,6 @@ int LWSAV::Save::read_wire() {
 
 int LWSAV::Save::read_states() {
     // Читаем состояние
-    fseek(file, 2, SEEK_CUR); // Пропускаем 2 байта
     l_uint32 length; // Длина состояний
     fread(&length, sizeof(l_uint32), 1, file);
     l_uint8* st = new l_uint8[length]; // Состояния

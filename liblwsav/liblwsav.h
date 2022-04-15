@@ -63,7 +63,7 @@ namespace LWSAV {
     struct Wire {
         Peg begin;
         Peg end;
-        l_uint16 circuit_state_id;
+        l_uint32 circuit_state_id;
         float rotation;
     };
 
@@ -78,6 +78,7 @@ namespace LWSAV {
     public:
         CircuitStates();
         void load(std::vector<l_uint8> states);
+        // Get State by ID
         l_uint8 get(l_uint16 id);
     };
 
