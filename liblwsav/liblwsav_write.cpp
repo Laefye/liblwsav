@@ -3,7 +3,7 @@
 #include <string.h>
 
 void LWSAV::Save::write(std::string path) {
-    FILE* file;
+    close();
 #ifdef _WIN32 // Добавление кросс платформенности (Чтоб компилятор от MSVC не ругался на fopen)
     errno_t err = fopen_s(&file, path.c_str(), "wb");
     if (err != 0) {
