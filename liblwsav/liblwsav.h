@@ -6,7 +6,7 @@
 // Constants
 #define LOGICWORLD_HEADER "Logic World save"
 #define LOGICWORLD_FOOTER "redstone sux lol"
-#define LOGGING
+// #define LOGGING
 // Includes
 #include <string>
 #include <stdio.h>
@@ -25,9 +25,9 @@ namespace LWSAV {
     typedef l_uint8 footer[16];
     
     struct SaveInfo {
-        char version; // Save Format Version
+        l_uint8 version; // Save Format Version
         l_uint32 game_verison[4]; // Game Version. [0] - Major, [1] - Minor, [2] - Patch, [3] - Build
-        char save_type; // Save Type
+        l_uint8 save_type; // Save Type: 01 - world, 02 - subassembly
         l_uint32 numbers_components; // Number of Components
         l_uint32 numbers_wires; // Number of Components
 
@@ -79,17 +79,24 @@ namespace LWSAV {
         CircuitStates();
         void load(std::vector<l_uint8> states);
         // Get State by ID
-        l_uint8 get(l_uint16 id);
+        l_uint8 get(l_uint32 id);
+        void set(l_uint32 id, l_uint8 state);
+        
+        std::vector<l_uint8>* vector();
     };
 
     class Save {
         FILE* file;
         std::string p;
-        int read();
         int read_map_components();
         int read_component();
         int read_wire();
         int read_states();
+
+        void write_map_components();
+        void write_component(l_uint32 index);
+        void write_wire(l_uint32 index);
+        void write_states();
 
         // File
         header h;
@@ -99,14 +106,19 @@ namespace LWSAV {
     public:
         // path - Path to .logicworld file
         Save(std::string path);
-        ~Save();
-        // Open and read file
+        // Close file;
+        void close();
+        // Open file
         int open();
+        // Read file
+        int read();
         // Get SaveInfo
         SaveInfo* get_info();
         // Get SaveData
         SaveData* get_data();
         // Get CircuitStates
         CircuitStates* get_states();
+
+        void write(std::string path);
     };
 }
