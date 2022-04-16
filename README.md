@@ -1,5 +1,5 @@
 # lwlwsav
-## Library for reading (and maybe in soon for writing) Logic World Saves
+## Library for reading and writing Logic World Saves
 
 ## Build liblwsav and lwreader (Example program)
 ``` bash
