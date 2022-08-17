@@ -1,4 +1,4 @@
-# lwlwsav (depracated)
+# lwlwsav (deprecated)
 ## Library for reading and writing Logic World Saves
 
 ## Build liblwsav and lwreader (Example program)
