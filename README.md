@@ -1,4 +1,5 @@
 # lwlwsav (deprecated)
+Deprecated because LW v0.91 has another format of saves
 ## Library for reading and writing Logic World Saves
 
 ## Build liblwsav and lwreader (Example program)
